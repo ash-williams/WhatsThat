@@ -1,4 +1,4 @@
-# WhatsThat
+# WhatsThat?
 This is the WhatsThat? API server code for the 22/23 Mobile Applications Development (6G6Z1104) server.
 
 To get started, read the assignment brief and attend the assignment lecture.
