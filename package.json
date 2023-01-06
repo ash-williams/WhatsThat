@@ -1,0 +1,32 @@
+{
+  "name": "whatsthat",
+  "version": "1.0.0",
+  "description": "The WhatsThat? API server for use in the 22/23 Mobile Applications Development assignment",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ash-williams/WhatsThat.git"
+  },
+  "author": "Ash Williams",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ash-williams/WhatsThat/issues"
+  },
+  "homepage": "https://github.com/ash-williams/WhatsThat#readme",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "bunyan": "^1.8.15",
+    "convict": "^6.2.3",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^2.0.20",
+    "swagger-parameters": "^1.3.2",
+    "swagger-ui-express": "^4.6.0",
+    "z-schema": "^5.0.5"
+  }
+}
