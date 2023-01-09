@@ -23,7 +23,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
         )`, (err) => {
 
             if(err){
-                console.log(err)
+                //console.log(err)
                 console.log("whatsthat_users table already created")
             }else{
                 console.log("whatsthat_users table created")
@@ -39,7 +39,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             )`, (err) => {
 
                 if(err){
-                    console.log(err)
+                    //console.log(err)
                     console.log("whatsthat_user_contacts table already created")
                 }else{
                     console.log("whatsthat_user_contacts table created")
@@ -53,7 +53,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
                 )`, (err) => {
         
                     if(err){
-                        console.log(err)
+                        //console.log(err)
                         console.log("whatsthat_chats table already created")
                     }else{
                         console.log("whatsthat_chats table created")
@@ -68,7 +68,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
                     )`, (err) => {
                 
                         if(err){
-                            console.log(err)
+                            //console.log(err)
                             console.log("whatsthat_chat_users table already created")
                         }else{
                             console.log("whatsthat_chat_users table created")
@@ -85,7 +85,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
                         )`, (err) => {
                         
                             if(err){
-                                console.log(err)
+                                //console.log(err)
                                 console.log("whatsthat_messages table already created")
                             }else{
                                 console.log("whatsthat_messages table created")
