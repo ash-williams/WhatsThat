@@ -1,5 +1,6 @@
 # Ash Added
 db.sqlite
+storage/[0-9]*.*
 
 
 # Logs
