@@ -13,6 +13,9 @@ module.exports = function(router){
     router.route('/user/:user_id/contact')
         .post(auth.isAuthenticated, contacts.add_contact)
         .delete(auth.isAuthenticated, contacts.remove_contact);
+
+    router.route('/blocked')
+        .get(auth.isAuthenticated, contacts.get_blocked);
     
     router.route('/user/:user_id/block')
         .post(auth.isAuthenticated, contacts.block_contact)

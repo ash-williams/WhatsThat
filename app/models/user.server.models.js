@@ -323,7 +323,7 @@ const search_users = (params, user_id, done) => {
     query += "GROUP BY u.user_id "
 
     if(params.search_in === "contacts"){
-        query += 'HAVING u.user_id IN (SELECT c.user_id FROM whatsthat_user_contacts c WHERE c.user_id=' + user_id + ' UNION SELECT c.contact_id FROM whatsthat_user_contacts c WHERE c.contact_id=' + user_id + ' ) '
+        query += 'HAVING u.user_id IN (SELECT c.user_id FROM whatsthat_user_contacts c WHERE c.contact_id=' + user_id + ' AND c.blocked = 0 UNION SELECT c.contact_id FROM whatsthat_user_contacts c WHERE c.user_id=' + user_id + ' AND c.blocked = 0) '
     }
 
     if(params.limit && params.limit >= 1 && params.limit <= 100){

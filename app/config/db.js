@@ -32,7 +32,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             db.run(`CREATE TABLE whatsthat_user_contacts (
                 user_id INTEGER,
                 contact_id INTEGER,
-                status TEXT NOT NULL,
+                blocked INTEGER NOT NULL DEFAULT 0,
                 PRIMARY KEY(user_id, contact_id),
                 FOREIGN KEY(user_id) REFERENCES whatsthat_users(user_id)
                 FOREIGN KEY(contact_id) REFERENCES whatsthat_users(user_id)
