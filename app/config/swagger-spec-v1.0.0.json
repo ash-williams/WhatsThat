@@ -290,6 +290,9 @@
             "401": {
               "description": "Unauthorised"
             },
+            "403": {
+              "description": "Forbidden"
+            },
             "404": {
               "description": "Not Found"
             },
@@ -1047,7 +1050,8 @@
               "type": "string",
               "example": "Wr3xh4m!"
             }
-          }
+          },
+          "additionalProperties": false
         },
         "SignUpResponse": {
           "type": "object",
@@ -1056,7 +1060,8 @@
               "type": "integer",
               "example": 14
             }
-          }
+          },
+          "additionalProperties": false
         },
         "User": {
           "type": "object",
@@ -1078,7 +1083,8 @@
               "format": "email",
               "example": "ashley.williams@mmu.ac.uk"
             }
-          }
+          },
+          "additionalProperties": false
         },
         "UpdateUser": {
           "type": "object",
@@ -1100,7 +1106,8 @@
               "type": "string",
               "example": "Wr3xh4m!"
             }
-          }
+          },
+          "additionalProperties": false
         },
         "LoginUser": {
           "type": "object",
@@ -1118,7 +1125,8 @@
               "type": "string",
               "example": "Wr3xh4m!"
             }
-          }
+          },
+          "additionalProperties": false
         },
         "LoginResponse": {
           "type": "object",
@@ -1131,7 +1139,8 @@
               "type": "string",
               "example": "b5d9e7be6c97aa855f721b6e742120f2"
             }
-          }
+          },
+          "additionalProperties": false
         },
         "BinaryImageFile": {
           "type": "string",
@@ -1167,7 +1176,8 @@
             "last_message": {
               "$ref": "#/components/schemas/SingleMessage"
             }
-          }
+          },
+          "additionalProperties": false
         },
         "CreateChat": {
           "type": "object",
@@ -1176,7 +1186,8 @@
               "type": "string",
               "example": "The Rod Stewart Appreciation Society"
             }
-          }
+          },
+          "additionalProperties": false
         },
         "Chat": {
           "type": "object",
@@ -1194,7 +1205,8 @@
             "messages": {
               "$ref": "#/components/schemas/Messages"
             }
-          }
+          },
+          "additionalProperties": false
         },
         "UpdateChat": {
           "type": "object",
@@ -1203,7 +1215,8 @@
               "type": "string",
               "example": "The Rod Stewart Appreciation Society"
             }
-          }
+          },
+          "additionalProperties": false
         },
         "Messages": {
           "type": "array",
@@ -1229,7 +1242,8 @@
             "author": {
               "$ref": "#/components/schemas/User"
             }
-          }
+          },
+          "additionalProperties": false
         },
         "SendMessage": {
           "type": "object",
@@ -1241,7 +1255,8 @@
               "type": "string",
               "example": "Welcome to all our new members"
             }
-          }
+          },
+          "additionalProperties": false
         },
         "UpdateMessage": {
           "type": "object",
@@ -1250,7 +1265,8 @@
               "type": "string",
               "example": "Welcome to all our new members"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "securitySchemes": {

@@ -12,14 +12,14 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
 
         db.run(`CREATE TABLE whatsthat_users (
             user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user_givenname text NOT NULL,
-            user_familyname text NOT NULL,
-            user_email text NOT NULL UNIQUE,
-            user_password text NOT NULL,
-            user_salt text NOT NULL,
-            user_token text DEFAULT NULL UNIQUE,
-            CONSTRAINT email_unique UNIQUE (user_email),
-            CONSTRAINT token_unique UNIQUE (user_token)
+            given_name text NOT NULL,
+            family_name text NOT NULL,
+            email text NOT NULL UNIQUE,
+            password text NOT NULL,
+            salt text NOT NULL,
+            token text DEFAULT NULL UNIQUE,
+            CONSTRAINT email_unique UNIQUE (email),
+            CONSTRAINT token_unique UNIQUE (token)
         )`, (err) => {
 
             if(err){
