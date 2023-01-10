@@ -36,7 +36,7 @@ const create = (req, res) => {
             return res.sendStatus(500);
         }
 
-        return res.status(201).send({id:id});  
+        return res.status(201).send({"user_id":id});  
     });
 }
 
