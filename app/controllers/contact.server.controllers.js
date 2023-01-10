@@ -112,24 +112,127 @@ const remove_contact = (req, res) => {
 }
 
 const get_blocked = (req, res) => {
+    let token = req.get(config.get('authToken'));
 
-    //200, 500
+    users.getIdFromToken(token, (err, id) => {
+        if(err){
+            log.warn(`contacts.controller.get_blocked: ${JSON.stringify(err)}`);
+            return res.sendStatus(500); 
+        }
 
-    return res.sendStatus(500);
+        contacts.get_blocked(id, (err, results) => {
+            if(err){
+                log.warn(`contacts.controller.get_blocked: ${JSON.stringify(err)}`);
+                return res.sendStatus(500);
+            }
+
+            if(!results){
+                return res.status(200).json([]);
+            }
+
+            return res.status(200).json(results);
+        })
+    });
 }
 
 const block_contact = (req, res) => {
 
-    //200, 404, 500
+    let id = parseInt(req.params.user_id);
+    if (!validator.isValidId(id)) return res.sendStatus(404);
 
-    return res.sendStatus(500);
+    let token = req.get(config.get('authToken'));
+    users.getIdFromToken(token, (err, _id) => {
+        if(err){
+            log.warn(`contacts.controller.block_contact: ${JSON.stringify(err)}`);
+            return res.sendStatus(500); 
+        }
+
+        if(id === _id){
+            return res.status(400).send("You can't block yourself")
+        }
+
+        users.getOne(id, (err, user) => {
+            if(err){
+                log.warn(`contacts.controller.block_contact: ${JSON.stringify(err)}`);
+                return res.sendStatus(500);
+            }
+        
+            if(!user){
+                return res.sendStatus(404);
+            }
+
+            contacts.is_contact(_id, id, (err, record) =>{
+                if(err){
+                    return res.sendStatus(500);
+                }
+
+
+                if(!record){
+                    return res.status(400).send("Can't block a user who isn't in your contacts list")
+                }
+
+                contacts.block_contact(_id, id, (err) => {
+                    if(err) {
+                        log.warn(`contacts.controller.block_contact: ${JSON.stringify(err)}`);
+                        return res.sendStatus(500);
+                    }
+    
+                    return res.sendStatus(200);
+                })
+            })
+            
+        })
+    })
 }
 
 const unblock_contact = (req, res) => {
 
-    //200, 404, 500
+    let id = parseInt(req.params.user_id);
+    if (!validator.isValidId(id)) return res.sendStatus(404);
 
-    return res.sendStatus(500);
+    let token = req.get(config.get('authToken'));
+    users.getIdFromToken(token, (err, _id) => {
+        if(err){
+            log.warn(`contacts.controller.unblock_contact: ${JSON.stringify(err)}`);
+            return res.sendStatus(500); 
+        }
+
+        if(id === _id){
+            return res.status(400).send("You can't block yourself")
+        }
+
+        users.getOne(id, (err, user) => {
+            if(err){
+                log.warn(`contacts.controller.unblock_contact: ${JSON.stringify(err)}`);
+                return res.sendStatus(500);
+            }
+        
+            if(!user){
+                return res.sendStatus(404);
+            }
+
+            contacts.is_contact(_id, id, (err, record) =>{
+                if(err){
+                    return res.sendStatus(500);
+                }
+
+
+                if(!record){
+                    return res.status(400).send("Can't block a user who isn't in your contacts list")
+                }
+
+                contacts.unblock_contact(_id, id, (err) => {
+                    if(err) {
+                        log.warn(`contacts.controller.unblock_contact: ${JSON.stringify(err)}`);
+                        return res.sendStatus(500);
+                    }
+    
+                    return res.sendStatus(200);
+                })
+            })
+            
+        })
+    })
 }
 
 module.exports = {
