@@ -161,30 +161,49 @@ const add_user_to_chat = (chat_id, user_id, done) => {
 
 
 
-// const get_chat_members = (chat_id, done) => {
-//     let members = []
-//     let member_errors = []
+const remove_user_from_chat = (chat_id, user_id, done) => {
+    let values = [chat_id, user_id];
 
-//     db.each(
-//         `
-//         SELECT u.user_id, u.given_name AS first_name, u.family_name AS last_name, u.email
-//         FROM whatsthat_users u, whatsthat_chat_users c
-//         WHERE u.user_id = c.user_id
-//         AND c.chat_id = ?
-//         `,
-//         [chat_id],
-//         (err, row) => {
-//             if(err) member_errors.push(err)
-//             members.push(row)
-//         },
-//         (err) => {
-//             if(err) return done(err);
-//             if(member_errors.length > 0) return done(member_errors)
+    db.run(
+        'DELETE FROM whatsthat_chat_users WHERE chat_id = ? AND user_id = ?',
+        values,
+        function(err){
+            
+            // If the chat has no users, delete the chat too (and messages)
+            db.all(
+                "SELECT * FROM whatsthat_chat_users WHERE chat_id = ?",
+                [chat_id],
+                (err, rows) => {
+                    if(err) return done(err);
 
-//             return done(null, members)
-//         }
-//     )
-// }
+                    if(rows.length > 0){
+                        //still has members, do nothing
+                        return done(null)
+                    }
+
+                    db.run(
+                        "DELETE FROM whatsthat_messages WHERE chat_id = ?",
+                        [chat_id],
+                        (err) => {
+                            if(err) return done(err)
+
+                            db.run(
+                                "DELETE FROM whatsthat_chats WHERE chat_id = ?",
+                                [chat_id],
+                                (err) => {
+                                    return done(err)
+                                }
+                            )
+                        }
+                    )
+
+                }
+            )
+        }
+    );  
+}
+
+
 
 const get_chat_info = (user_id) => {
     return new Promise((resolve, reject) => {
@@ -249,6 +268,71 @@ const get_all_chats = (user_id, done) => {
 
 
 
+const update_chat = (chat_id, chat, done) => {
+    db.run("UPDATE whatsthat_chats SET name=? WHERE chat_id=?",
+        [chat.name, chat_id],
+        function(err){
+            done(err);
+        }
+    );
+}
+
+
+
+const send_message = (chat_id, message, author_id, done) => {
+
+    db.run("INSERT INTO whatsthat_messages (chat_id, message, timestamp, author) VALUES (?,?,?,?)",
+        [chat_id, message.message, new Date(), author_id],
+        function(err){
+            done(err);
+        }
+    );
+}
+
+
+
+const update_message = (chat_id, message_id, message, author_id, done) => {
+
+    db.get("SELECT * FROM whatsthat_messages WHERE message_id = ? AND chat_id = ?",
+        [message_id, chat_id],
+        (err, row) => {
+            if(err) return done(err);
+            if(!row) return done(404)
+            if(row.author != author_id) return done(403)
+
+            db.run("UPDATE whatsthat_messages SET message = ? WHERE message_id = ?",
+                [message.message, message_id],
+                function(err){
+                    done(err);
+                }
+            );
+        }
+    )  
+}
+
+
+
+const delete_message = (chat_id, message_id, author_id, done) => {
+
+    db.get("SELECT * FROM whatsthat_messages WHERE message_id = ? AND chat_id = ?",
+        [message_id, chat_id],
+        (err, row) => {
+            if(err) return done(err);
+            if(!row) return done(404)
+            if(row.author != author_id) return done(403)
+
+            db.run("DELETE FROM whatsthat_messages WHERE message_id = ?",
+                [message_id],
+                function(err){
+                    done(err);
+                }
+            );
+        }
+    )  
+}
+
+
+
 
 
 
@@ -258,5 +342,10 @@ module.exports = {
     insert,
     add_user_to_chat,
     get_single_chat,
-    get_all_chats
+    get_all_chats,
+    remove_user_from_chat,
+    update_chat,
+    send_message,
+    update_message,
+    delete_message
 }
