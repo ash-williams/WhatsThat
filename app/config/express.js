@@ -13,14 +13,15 @@ const
     bodyParser = require('body-parser'),
     morgan = require('morgan'),
     rawBodyParser = require('../lib/rawbodyparser'),
-    multer = require('multer');
+    multer = require('multer'),
+    cors = require('cors');
 
-const allowCrossOriginRequests = (req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, X-Authorization');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
-    next();
-};
+// const allowCrossOriginRequests = (req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, X-Authorization');
+//     res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
+//     next();
+// };
 
 // Determine correct body parser to use
 const jsonParser = bodyParser.json();
@@ -50,7 +51,8 @@ module.exports = function(){
 
     app.use(dynamicBodyParser);
 
-    app.use(allowCrossOriginRequests);
+    app.use(cors())
+    // app.use(allowCrossOriginRequests);
 
     app.use((req, res, next) => {
         console.log(`##### ${req.method} ${req.path} #####`);
