@@ -74,7 +74,6 @@ const get_single_chat = (req, res) => {
                 }
 
                 log.warn(`chat.controller.get_single_chat: ${JSON.stringify(err)}`);
-                console.log("HERE")
                 return res.sendStatus(500); 
             }
 

@@ -110,9 +110,9 @@ const is_contact = (user_id, contact_id, done) => {
         return done(true)
     }
 
-    let query = "SELECT * FROM whatsthat_user_contacts WHERE user_id = ? AND contact_id = ?"
+    let query = "SELECT * FROM whatsthat_user_contacts WHERE (user_id = ? AND contact_id = ?) OR (user_id = ? AND contact_id = ?)"
 
-    db.get(query, [user_id, contact_id], function(err, row){
+    db.get(query, [user_id, contact_id, contact_id, user_id], function(err, row){
         if(err) {
             return done(err, null)
         }
