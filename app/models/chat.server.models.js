@@ -332,6 +332,7 @@ const get_all_chats = (user_id, done) => {
         (err) => {
             if(err) return done(err, null);
             if(errors.length > 0) return done(errors, null)
+            if (chats.length === 0) return done(null, [])
 
             let counter = 0;
 
